@@ -1,7 +1,7 @@
 // ── CONFIG ───────────────────────────────────────────────────────────────────
 // Point this to your deployed Cloudflare Worker URL.
 // e.g. 'https://shiplog-api.your-subdomain.workers.dev'
-const API_BASE = 'https://shiplog-api.YOUR-SUBDOMAIN.workers.dev';
+const API_BASE = 'https://shiplog-api.siddharthmahajan65.workers.dev';
 
 const FREE_LIMIT = 2;
 
