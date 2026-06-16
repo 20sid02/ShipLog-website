@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shiplog — AI-Powered Customer Changelogs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">Ship<span>log</span></a>
+  <button class="nav-btn" onclick="openModal()">Join Beta</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-eyebrow">✦ Now in Beta</span>
+  <h1>Your Customers Have No&nbsp;Idea What You Just&nbsp;Shipped.</h1>
+  <p>Bridge the gap between engineering velocity and product marketing. Convert internal pull requests into clean, engaging public changelogs that customers actually want to read.</p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="openModal()">Request Beta Access</button>
+    <button class="btn-secondary" onclick="document.querySelector('.demo-section').scrollIntoView({behavior:'smooth'})">See a Sample ↓</button>
+  </div>
+</section>
+
+<!-- DEMO: WALL OF UPDATES -->
+<section class="demo-section">
+  <div class="demo-label">
+    <h2>What your changelog looks like</h2>
+    <p>AI-transformed from raw pull requests — no writer needed.</p>
+  </div>
+
+  <div class="changelog-card">
+    <div class="changelog-header">
+      <span class="product-name">Acme&nbsp;API</span>
+      <span class="changelog-label">Product Updates</span>
+    </div>
+
+    <div class="changelog-entry">
+      <div class="entry-meta">
+        <span class="entry-date">June 14, 2026</span>
+        <span class="tag tag-new">New</span>
+      </div>
+      <div class="entry-title">Webhooks now retry automatically on failure</div>
+      <div class="entry-body">Webhook deliveries that fail with a 5xx or timeout are now retried up to 5 times with exponential backoff — so transient downtime on your end no longer means lost events. You can see retry history and manually trigger a replay from the dashboard.</div>
+    </div>
+
+    <div class="changelog-entry">
+      <div class="entry-meta">
+        <span class="entry-date">June 11, 2026</span>
+        <span class="tag tag-improved">Improved</span>
+      </div>
+      <div class="entry-title">Search is 4× faster across large datasets</div>
+      <div class="entry-body">We rewrote the query engine powering full-text search. For workspaces with more than 50k records, searches now return in under 200ms on average — down from 800ms. No changes needed on your end; existing queries just got faster.</div>
+    </div>
+
+    <div class="changelog-entry">
+      <div class="entry-meta">
+        <span class="entry-date">June 9, 2026</span>
+        <span class="tag tag-new">New</span>
+      </div>
+      <div class="entry-title">CSV export now includes custom fields</div>
+      <div class="entry-body">Any custom fields you've added to records are now included in CSV exports. The column order matches the order shown in your table view, and field names match your labels exactly.</div>
+    </div>
+
+    <div class="changelog-entry">
+      <div class="entry-meta">
+        <span class="entry-date">June 5, 2026</span>
+        <span class="tag tag-fixed">Fixed</span>
+      </div>
+      <div class="entry-title">Pagination no longer skips records under high load</div>
+      <div class="entry-body">A race condition caused paginated API responses to occasionally skip records when new items were inserted concurrently. This is now fixed — all list endpoints use stable cursor-based pagination.</div>
+    </div>
+
+    <div class="changelog-entry">
+      <div class="entry-meta">
+        <span class="entry-date">June 2, 2026</span>
+        <span class="tag tag-infra">Infrastructure</span>
+      </div>
+      <div class="entry-title">Reduced P99 latency by 40% in EU regions</div>
+      <div class="entry-body">We migrated EU workloads to a closer edge location, reducing round-trip times for customers in France, Germany, and the Nordics. No changes to your integration are needed.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRY IT LIVE -->
+<section class="tryme-section">
+  <div class="tryme-header">
+    <h2>Try it on your own PR</h2>
+    <p>Paste a pull request title and description. Watch it become a customer-facing update.</p>
+  </div>
+
+  <div class="tryme-layout">
+    <div class="tryme-input-panel">
+      <div>
+        <div class="tryme-field-label">PR Title</div>
+        <input type="text" id="prTitle" placeholder="fix: pagination offset bug in list endpoint" maxlength="200">
+      </div>
+      <div>
+        <div class="tryme-field-label">PR Description <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></div>
+        <textarea id="prBody" placeholder="Closes #412. Users on page 2+ were seeing duplicate records when new items were inserted concurrently. Switched to cursor-based pagination."></textarea>
+      </div>
+      <button class="tryme-generate-btn" id="generateBtn" onclick="handleGenerateClick()">Generate Changelog Entry →</button>
+      <p class="tryme-key-hint"><span id="genCountHint">2 free generations.</span> This demo uses a lightweight model — the full product will be significantly more capable.</p>
+    </div>
+
+    <div class="tryme-output-panel" id="trymeOutput">
+      <div class="tryme-placeholder" id="trmePlaceholder">
+        <div class="tryme-placeholder-icon">✦</div>
+        Your changelog entry will appear here.
+      </div>
+      <div class="tryme-loading" id="trmeLoading">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <p>Generating your changelog entry…</p>
+      </div>
+      <div class="tryme-result" id="trmeResult">
+        <div class="entry-meta">
+          <span class="entry-date" id="trmeDate"></span>
+          <span class="tag" id="trmeTag"></span>
+        </div>
+        <div class="entry-title" id="trmeTitle"></div>
+        <div class="entry-body" id="trmeBody"></div>
+      </div>
+      <div class="tryme-error" id="trmeError">
+        <strong>Could not generate entry.</strong>
+        <span id="trmeErrorMsg"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <h2>From merged PR to published update in seconds.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Connect GitHub</h3>
+      <p>Authorize Shiplog on your repo. We read merged PRs — nothing else.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>AI Rewrites</h3>
+      <p>Each PR title, description, and diff is transformed into customer-friendly prose.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Review &amp; Publish</h3>
+      <p>Edit, group by theme, and publish to your public changelog page in one click.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Notify Customers</h3>
+      <p>Automatically email subscribers or post to Slack when new updates go live.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip">
+  <h2>Be among the first to ship beautiful changelogs.</h2>
+  <p>Available as a CLI tool and a hosted SaaS. Both in beta now.</p>
+  <button class="btn-primary" onclick="openModal()">Request Beta Access →</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Shiplog</span>
+  <span>Built with ♥ and Claude</span>
+</footer>
+
+<!-- BETA MODAL -->
+<div class="modal-overlay" id="betaModal" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+
+    <div id="formState">
+      <h3 id="modalTitle">Join the Beta</h3>
+      <p class="modal-sub" id="modalSub">Early access is free. We'll email you as soon as a spot opens up.</p>
+
+      <div class="beta-type-select">
+        <label class="beta-option">
+          <input type="radio" name="betaType" value="cli" checked>
+          <div class="beta-option-icon">⌨️</div>
+          <div class="beta-option-title">CLI Beta</div>
+          <div class="beta-option-desc">Run locally, pipe GitHub data in</div>
+        </label>
+        <label class="beta-option">
+          <input type="radio" name="betaType" value="saas">
+          <div class="beta-option-icon">🌐</div>
+          <div class="beta-option-title">SaaS Beta</div>
+          <div class="beta-option-desc">Hosted dashboard, no setup</div>
+        </label>
+      </div>
+
+      <form onsubmit="handleSubmit(event)">
+        <label class="field-label" for="emailInput">Work email</label>
+        <input type="email" id="emailInput" placeholder="you@company.com" required autocomplete="email">
+        <button type="submit" class="submit-btn">Request Access</button>
+        <p class="fine-print">No spam. Unsubscribe anytime.</p>
+      </form>
+    </div>
+
+    <div class="success-state" id="successState">
+      <div class="check">🎉</div>
+      <h4>You're on the list!</h4>
+      <p>We'll reach out when your beta spot is ready.<br>Keep shipping.</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
