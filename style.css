@@ -98,6 +98,23 @@ nav {
   line-height: 1.65;
 }
 
+.btn-try-hero {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  padding: 15px 32px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  margin-bottom: 16px;
+  letter-spacing: -0.3px;
+}
+
+.btn-try-hero:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
 .hero-actions {
   display: flex;
   gap: 12px;
@@ -490,7 +507,7 @@ footer {
 .tryme-section {
   padding: 72px 24px;
   max-width: 820px;
-  margin: 0 auto;
+  margin: 0 auto 0;
 }
 
 .tryme-header {
@@ -526,6 +543,78 @@ footer {
   flex-direction: column;
   gap: 10px;
 }
+
+.privacy-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+  font-size: 14px;
+  color: #166534;
+  line-height: 1.55;
+}
+
+.privacy-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.privacy-banner strong { color: #14532d; }
+
+.tryme-steps {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  justify-content: center;
+}
+
+.tryme-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--gray-600);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  padding: 6px 14px;
+}
+
+.tryme-step-num {
+  background: var(--accent);
+  color: var(--white);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.tryme-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.random-btn {
+  background: none;
+  border: 1px solid var(--gray-200);
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  font-family: inherit;
+}
+
+.random-btn:hover { border-color: var(--accent); color: var(--accent); }
 
 .tryme-field-label {
   font-size: 12px;

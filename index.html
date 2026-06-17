@@ -19,17 +19,79 @@
   <span class="hero-eyebrow">✦ Now in Beta</span>
   <h1>Your Customers Have No&nbsp;Idea What You Just&nbsp;Shipped.</h1>
   <p>Bridge the gap between engineering velocity and product marketing. Convert internal pull requests into clean, engaging public changelogs that customers actually want to read.</p>
+  <button class="btn-try-hero" onclick="document.querySelector('.tryme-section').scrollIntoView({behavior:'smooth'})">Try it yourself — free, no signup →</button>
   <div class="hero-actions">
-    <button class="btn-primary" onclick="openModal()">Request Beta Access </button>
-    <button class="btn-secondary" onclick="document.querySelector('.demo-section').scrollIntoView({behavior:'smooth'})">See a Sample ↓</button>
-    <button class="btn-secondary" onclick="document.querySelector('.tryme-section').scrollIntoView({behavior:'smooth'})">Try it yourself ↓</button>
+    <button class="btn-secondary" onclick="openModal()">Request Beta Access</button>
+    <button class="btn-secondary" onclick="document.querySelector('.demo-section').scrollIntoView({behavior:'smooth'})">See a sample ↓</button>
+  </div>
+</section>
+
+<!-- TRY IT LIVE -->
+<section class="tryme-section">
+  <div class="tryme-header">
+    <h2>See it in action — try it now</h2>
+    <p>Paste any pull request title and watch it turn into a changelog your customers will actually read.</p>
+  </div>
+
+  <div class="privacy-banner">
+    <span class="privacy-icon">🔒</span>
+    <div>
+      <strong>Your repos and commits are completely safe.</strong> This demo only uses the text you type into the boxes below. I have zero access to your GitHub account, repositories, or commit history — nothing is read, stored, or transmitted.
+    </div>
+  </div>
+
+  <div class="tryme-steps">
+    <div class="tryme-step"><span class="tryme-step-num">1</span> Paste a PR title (or hit the random button)</div>
+    <div class="tryme-step"><span class="tryme-step-num">2</span> Add an optional description for better results</div>
+    <div class="tryme-step"><span class="tryme-step-num">3</span> Click Generate and see your customer-facing entry</div>
+  </div>
+
+  <div class="tryme-layout">
+    <div class="tryme-input-panel">
+      <div>
+        <div class="tryme-field-header">
+          <div class="tryme-field-label">PR Title</div>
+          <button class="random-btn" onclick="seedRandomExample()" type="button">⚄ Random example</button>
+        </div>
+        <input type="text" id="prTitle" placeholder="fix: pagination offset bug in list endpoint" maxlength="200">
+      </div>
+      <div>
+        <div class="tryme-field-label">PR Description <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></div>
+        <textarea id="prBody" placeholder="Closes #412. Users on page 2+ were seeing duplicate records when new items were inserted concurrently. Switched to cursor-based pagination."></textarea>
+      </div>
+      <button class="tryme-generate-btn" id="generateBtn" onclick="handleGenerateClick()">Generate Changelog Entry →</button>
+      <p class="tryme-key-hint"><span id="genCountHint">2 free generations.</span> This demo uses a lightweight model — the full product will be significantly more capable.</p>
+    </div>
+
+    <div class="tryme-output-panel" id="trymeOutput">
+      <div class="tryme-placeholder" id="trmePlaceholder">
+        <div class="tryme-placeholder-icon">✦</div>
+        Your changelog entry will appear here.
+      </div>
+      <div class="tryme-loading" id="trmeLoading">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <p>Generating your changelog entry…</p>
+      </div>
+      <div class="tryme-result" id="trmeResult">
+        <div class="entry-meta">
+          <span class="entry-date" id="trmeDate"></span>
+          <span class="tag" id="trmeTag"></span>
+        </div>
+        <div class="entry-title" id="trmeTitle"></div>
+        <div class="entry-body" id="trmeBody"></div>
+      </div>
+      <div class="tryme-error" id="trmeError">
+        <strong>Could not generate entry.</strong>
+        <span id="trmeErrorMsg"></span>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- DEMO: WALL OF UPDATES -->
 <section class="demo-section">
   <div class="demo-label">
-    <h2>What your changelog looks like</h2>
+    <h2>What a full changelog looks like</h2>
     <p>AI-transformed from raw pull requests — no writer needed.</p>
   </div>
 
@@ -82,52 +144,6 @@
       </div>
       <div class="entry-title">Reduced P99 latency by 40% in EU regions</div>
       <div class="entry-body">We migrated EU workloads to a closer edge location, reducing round-trip times for customers in France, Germany, and the Nordics. No changes to your integration are needed.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TRY IT LIVE -->
-<section class="tryme-section">
-  <div class="tryme-header">
-    <h2>Try it on your own PR</h2>
-    <p>Paste a pull request title and description. Watch it become a customer-facing update.</p>
-  </div>
-
-  <div class="tryme-layout">
-    <div class="tryme-input-panel">
-      <div>
-        <div class="tryme-field-label">PR Title</div>
-        <input type="text" id="prTitle" placeholder="fix: pagination offset bug in list endpoint" maxlength="200">
-      </div>
-      <div>
-        <div class="tryme-field-label">PR Description <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></div>
-        <textarea id="prBody" placeholder="Closes #412. Users on page 2+ were seeing duplicate records when new items were inserted concurrently. Switched to cursor-based pagination."></textarea>
-      </div>
-      <button class="tryme-generate-btn" id="generateBtn" onclick="handleGenerateClick()">Generate Changelog Entry →</button>
-      <p class="tryme-key-hint"><span id="genCountHint">2 free generations.</span> This demo uses a lightweight model — the full product will be significantly more capable.</p>
-    </div>
-
-    <div class="tryme-output-panel" id="trymeOutput">
-      <div class="tryme-placeholder" id="trmePlaceholder">
-        <div class="tryme-placeholder-icon">✦</div>
-        Your changelog entry will appear here.
-      </div>
-      <div class="tryme-loading" id="trmeLoading">
-        <div class="dots"><span></span><span></span><span></span></div>
-        <p>Generating your changelog entry…</p>
-      </div>
-      <div class="tryme-result" id="trmeResult">
-        <div class="entry-meta">
-          <span class="entry-date" id="trmeDate"></span>
-          <span class="tag" id="trmeTag"></span>
-        </div>
-        <div class="entry-title" id="trmeTitle"></div>
-        <div class="entry-body" id="trmeBody"></div>
-      </div>
-      <div class="tryme-error" id="trmeError">
-        <strong>Could not generate entry.</strong>
-        <span id="trmeErrorMsg"></span>
-      </div>
     </div>
   </div>
 </section>

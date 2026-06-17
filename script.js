@@ -82,6 +82,54 @@ function handleGenerateClick() {
   generateEntry();
 }
 
+// ── RANDOM EXAMPLES ──────────────────────────────────────────────────────────
+const SAMPLE_COMMITS = [
+  {
+    title: 'feat: add dark mode support across the entire app',
+    body: 'Users can now toggle dark mode from account settings. Preference is persisted per-account and synced across devices. System preference is respected on first visit.',
+  },
+  {
+    title: 'fix: pagination offset bug in list endpoint',
+    body: 'Closes #412. Users on page 2+ were seeing duplicate records when new items were inserted concurrently. Switched to cursor-based pagination to fix this.',
+  },
+  {
+    title: 'perf: reduce search query time by 60% with index optimization',
+    body: 'Added composite index on (user_id, created_at, status). Queries on the main feed dropped from ~800ms to ~320ms in production. No breaking changes.',
+  },
+  {
+    title: 'feat: CSV export now supports custom date ranges',
+    body: 'Users can now pick a start and end date when exporting data. Previously only full exports were supported. Works with all existing filters.',
+  },
+  {
+    title: 'fix: email notifications were sending twice for some users',
+    body: 'A race condition in the job queue caused duplicate sends when two workers picked up the same job. Added a distributed lock around email dispatch.',
+  },
+  {
+    title: 'feat: webhook retry logic with exponential backoff',
+    body: 'Failed webhook deliveries now retry up to 5 times. Uses exponential backoff starting at 30 seconds. Failure logs are visible in the dashboard under Integrations.',
+  },
+  {
+    title: 'chore: upgrade Node from 18 to 22 across all services',
+    body: 'Node 18 hits EOL next month. Updated Dockerfile, CI pipeline, and local dev setup. No API changes. Startup time improved by ~400ms as a side effect.',
+  },
+  {
+    title: 'feat: add two-factor authentication via TOTP',
+    body: 'Users can now enable 2FA with any authenticator app (Google Authenticator, Authy, 1Password). Backup codes are generated at setup and can be regenerated from security settings.',
+  },
+];
+
+let lastSeedIndex = -1;
+
+function seedRandomExample() {
+  let idx;
+  do { idx = Math.floor(Math.random() * SAMPLE_COMMITS.length); } while (idx === lastSeedIndex && SAMPLE_COMMITS.length > 1);
+  lastSeedIndex = idx;
+  const ex = SAMPLE_COMMITS[idx];
+  document.getElementById('prTitle').value = ex.title;
+  document.getElementById('prBody').value = ex.body;
+  document.getElementById('prTitle').focus();
+}
+
 // ── TRY-IT DEMO ──────────────────────────────────────────────────────────────
 const TAG_CLASSES = {
   New: 'tag-new',
