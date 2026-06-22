@@ -326,6 +326,12 @@ nav {
 }
 
 /* FOOTER */
+.launchpadly-badge {
+  display: flex;
+  justify-content: center;
+  padding: 28px 24px 4px;
+}
+
 footer {
   border-top: 1px solid var(--gray-200);
   padding: 20px 24px;
